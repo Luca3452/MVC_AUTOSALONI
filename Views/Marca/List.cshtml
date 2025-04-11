@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model List<MVC_AUTOSALONI.Models.Entities.Marca>
+
+<h1>Elenco Marche</h1>
+
+
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				ID
+			</th>
+			<th>
+				Marche
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var marca in Model)
+		{
+			<tr>
+				<td>
+					@marca.Id_Marca
+				</td>
+				<td>
+					@marca.marca
+				</td>
+				<td>
+					<a class="btn btn-primary" asp-controller="Marca" asp-action="Edit" asp-route-id="#">Modifica</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
