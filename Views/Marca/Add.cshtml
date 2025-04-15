@@ -11,14 +11,21 @@
 <form method="post">
 
 
-    <div class="mt-3">
-        <label class="form-label">Marca</label>
-        <input type="text" class="form-control" asp-for="Marc" />
-    </div>
+	<div class="mt-3">
+		<label class="form-label">Marca</label>
+		<input type="text" class="form-control" asp-for="Marc" />
+	</div>
+	<br/>
 
-    <div class="mt-3">
-        <button type="submit" class="btn btn-primary">Salva</button>
-    </div>
-
+	@if (TempData["Errore"] is not null)
+	{
+		<div class="alert alert-danger">
+			<strong>@TempData["Errore"]</strong>
+		</div>
+	}
+	
+	<div class="mt-3">
+		<button type="submit" class="btn btn-primary">Salva</button>
+	</div>
 
 </form>

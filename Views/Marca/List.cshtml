@@ -25,13 +25,13 @@
 		{
 			<tr>
 				<td>
-					@marca.Id_Marca
+					@marca.ID_Marca
 				</td>
 				<td>
 					@marca.marca
 				</td>
 				<td>
-					<a class="btn btn-primary" asp-controller="Marca" asp-action="Edit" asp-route-id="#">Modifica</a>
+					<a class="btn btn-primary" asp-controller="Marca" asp-action="Edit" asp-route-id="@marca.ID_Marca">Modifica</a>
 				</td>
 			</tr>
 		}
