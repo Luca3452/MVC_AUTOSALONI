@@ -1,0 +1,38 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model MVC_AUTOSALONI.Models.AddModelloViewModel
+
+
+<h1>Inserimento nuovo Modello</h1>
+
+
+
+<form method="post">
+
+	<div class="mt-3">
+		<label class="form-label">Facoltà</label>
+		<select asp-for="ID_marca" asp-items="@ViewBag.MarcaDDL" class="form-select">
+			<option disabled selected>Selezionare una Marca</option>
+		</select>
+	</div>
+
+	<div class="mt-3">
+		<label class="form-label">Modello</label>
+		<input type="text" class="form-control" asp-for="modello" />
+	</div>
+	<br />
+
+	@if (TempData["Errore"] is not null)
+	{
+		<div class="alert alert-danger">
+			<strong>@TempData["Errore"]</strong>
+		</div>
+	}
+
+	<div class="mt-3">
+		<button type="submit" class="btn btn-primary">Salva</button>
+	</div>
+
+</form>
+

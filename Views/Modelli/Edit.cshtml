@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model MVC_AUTOSALONI.Models.Entities.Modello
+
+<h1>Modifica Studente</h1>
+
+@if (Model is null)
+{
+    <h2>Codice non trovato</h2>
+}
+else
+{
+    <form method="post">
+
+        <div class="mt-3">
+            <label class="form-label">ID_modello</label>
+            <input type="text" class="form-control" asp-for="ID_modello" readonly />
+        </div>
+
+        <div class="mt-3">
+            <label class="form-label">Modello</label>
+            <input type="text" class="form-control" asp-for="modello" maxlength="50" />
+        </div>
+
+        <div class="mt-3">
+            <label class="form-label">Marca</label>
+            <select asp-for="ID_marca" asp-items="@ViewBag.MarcaDDL" class="form-select">
+                <option disabled selected>Selezionare una Marca</option>
+            </select>
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">Salva</button>
+            <button type="submit" class="btn btn-danger ms-3" asp-controller="Modelli" asp-action="Delete">Elimina</button>
+        </div>
+
+    </form>
+}

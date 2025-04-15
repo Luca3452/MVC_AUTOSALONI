@@ -10,7 +10,9 @@ namespace MVC_AUTOSALONI.Data
 
         }
         public DbSet <Marca> Marca { get; set; }
+
+        public DbSet <Modello> Modello { get; set; }
+        public DbSet <Auto> Auto { get; set; }
             
-        
     }
 }
