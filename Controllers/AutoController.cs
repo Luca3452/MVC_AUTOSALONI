@@ -22,7 +22,7 @@ namespace MVC_AUTOSALONI.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            PopolaDDL();
+            PopolaDDLMarca();
             return View();
         }
 
@@ -46,14 +46,30 @@ namespace MVC_AUTOSALONI.Controllers
         //----------------------POPOLA DDL MARCA----------------------//
         //------------------------------------------------------------//
 
-        public void PopolaDDL()
+        public void PopolaDDLMarca()
         {
             IEnumerable<SelectListItem> ListaMarche = dbContext.Marca.Select(i => new SelectListItem
             {
                 Text = i.marca,
                 Value = i.ID_Marca.ToString()
             });
+           
             ViewBag.MarcaDDL = ListaMarche;
+        }
+
+        [HttpGet]
+        public JsonResult PopolaDDLModelli(Guid ID_marca)
+        {
+            var modelli = dbContext.Modello
+                .Where(m => m.ID_marca == ID_marca)
+                .Select(m => new
+                {
+                    value = m.ID_modello,
+                    text = m.modello
+                })
+                .ToList();
+
+            return Json(modelli);
         }
 
 
@@ -62,20 +78,17 @@ namespace MVC_AUTOSALONI.Controllers
         //------------------------------------------------------------//
 
 
-        [HttpGet]
-        public async Task<ActionResult> List()
-        {
-            var auto = await dbContext.Auto.ToListAsync();
-            foreach (var riga in auto)
-            {
-                riga = dbContext.Marca.FirstOrDefault(u => u.ID_Marca == riga.ID_marca);
-                //voglio trovare tutti i modelli appartenenti a una marca
-                var modelli = await dbContext.Modello
-                    .Where(m => m.ID_marca == riga.ID_marca)
-                    .ToListAsync();
-            }
-            return View(modelli);
-        }
+        //[HttpGet]
+        //public async Task<ActionResult> List()
+        //{
+        //    var auto = await dbContext.Auto.ToListAsync();
+        //    foreach (var riga in auto)
+        //    {
+        //        riga = dbContext.Marca.FirstOrDefault(u => u.ID_Marca == riga.ID_marca);
+                
+        //    }
+        //    return View(modelli);
+        //}
 
 
         //------------------------------------------------------------//
@@ -86,7 +99,7 @@ namespace MVC_AUTOSALONI.Controllers
         public async Task<IActionResult> Edit(Guid id)
         {
             var modello = await dbContext.Modello.FindAsync(id);
-            PopolaDDL();
+            PopolaDDLMarca();
             return View(modello);
         }
 

@@ -8,6 +8,8 @@ namespace MVC_AUTOSALONI.Models
     {
         public Guid ID_Modello { get; set; }
 
+        public Guid ID_Marca { get; set; }
+
         public DateTime data_acquisto { get; set; }
 
         public string targa { get; set; }
