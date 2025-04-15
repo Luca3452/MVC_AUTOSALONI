@@ -1,7 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model MVC_AUTOSALONI.Models.AddAutoViewModel
+@model MVC_AUTOSALONI.Models.Entities.Auto
 
 
 <h1>Inserimento nuova Auto</h1>
@@ -12,7 +12,7 @@
 
 	<div class="mt-3">
 		<label class="form-label">Marca</label>
-		<select asp-for="ID_Marca" asp-items="@ViewBag.MarcaDDL" class="form-select" onchange="OnMarcaSelezionata(this)">
+		<select id="ddlMarca" asp-for="Modello.ID_marca" asp-items="@ViewBag.MarcaDDL" class="form-select" onchange="OnMarcaSelezionata(this)" ons="OnMarcaSelezionata(this)">
 			<option disabled selected>Selezionare una Marca</option>
 		</select>
 	</div>
@@ -58,22 +58,30 @@
 
 
 <script>
-		function OnMarcaSelezionata(selectElement){
-			const ddlModello = document.getElementById("ddlModello");
-			var selectedvalue = selectElement.value;
-					fetch(`/Auto/PopolaDDLModelli?ID_marca=${selectedvalue}`)
-						.then(response => response.json())
-						.then(data => {
-							data.forEach(modello => {
-								const riga = document.createElement("option");
-								riga.value = modello.value;
-								riga.text = modello.text;
-								ddlModello.appendChild(riga);
-							});
-						})
-						.catch(error => {
-							console.error("Errore nel caricamento dei modelli:", error);
+	function OnMarcaSelezionata(selectElement, preselectId = null){
+		const ddlModello = document.getElementById("ddlModello");
+		var selectedvalue = selectElement.value;
+				fetch(`/Auto/PopolaDDLModelli?ID_marca=${selectedvalue}`)
+					.then(response => response.json())
+					.then(data => {
+						data.forEach(modello => {
+							const riga = document.createElement("option");
+							riga.value = modello.value;
+							riga.text = modello.text;
+							if (preselectId && modello.value === preselectId) {
+								riga.selected = true;
+							}
+							ddlModello.appendChild(riga);
 						});
+					})
+					.catch(error => {
+						console.error("Errore nel caricamento dei modelli:", error);
+					});
+	}
+	const ddlMarca = document.getElementById("ddlMarca");
+
+					if (ddlMarca.value) {
+			OnMarcaSelezionata(ddlMarca,);
 		}
 </script>
 

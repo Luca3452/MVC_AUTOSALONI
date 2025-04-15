@@ -78,17 +78,17 @@ namespace MVC_AUTOSALONI.Controllers
         //------------------------------------------------------------//
 
 
-        //[HttpGet]
-        //public async Task<ActionResult> List()
-        //{
-        //    var auto = await dbContext.Auto.ToListAsync();
-        //    foreach (var riga in auto)
-        //    {
-        //        riga = dbContext.Marca.FirstOrDefault(u => u.ID_Marca == riga.ID_marca);
-                
-        //    }
-        //    return View(modelli);
-        //}
+        [HttpGet]
+        public async Task<ActionResult> List()
+        {
+            var auto = await dbContext.Auto.ToListAsync();
+            foreach (var riga in auto)
+            {
+                riga.Modello = dbContext.Modello.FirstOrDefault(u => u.ID_modello == riga.ID_Modello);
+                riga.Modello.Marca = dbContext.Marca.FirstOrDefault(u => u.ID_Marca == riga.Modello.ID_marca);
+            }
+            return View(auto);
+        }
 
 
         //------------------------------------------------------------//
@@ -98,23 +98,25 @@ namespace MVC_AUTOSALONI.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var modello = await dbContext.Modello.FindAsync(id);
+            var auto = await dbContext.Auto.FindAsync(id);
+            auto.Modello = await dbContext.Modello.FindAsync(auto.ID_Modello);
+            auto.Modello.Marca = await dbContext.Marca.FindAsync(auto.Modello.ID_marca);
             PopolaDDLMarca();
-            return View(modello);
+            return View(auto);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(Modello viewModel)
         {
-            var model = await dbContext.Modello.FindAsync(viewModel.ID_modello);
+            var model = await dbContext.Auto.FindAsync(viewModel.ID_modello);
             if (model is not null)
             {
-                model.ID_modello = viewModel.ID_modello;
-                model.modello = viewModel.modello;
-                model.ID_marca = viewModel.ID_marca;
+                //model.ID_modello = viewModel.ID_modello;
+                //model.modello = viewModel.modello;
+                //model.ID_marca = viewModel.ID_marca;
                 await dbContext.SaveChangesAsync();
             }
-            return RedirectToAction("List", "Modelli");
+            return RedirectToAction("List", "Auto");
         }
 
         //------------------------------------------------------------//

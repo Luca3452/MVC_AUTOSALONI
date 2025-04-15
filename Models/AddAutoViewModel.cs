@@ -14,6 +14,6 @@ namespace MVC_AUTOSALONI.Models
 
         public string targa { get; set; }
 
-        public double prezzo_offerto { get; set; }
+        public decimal prezzo_offerto { get; set; }
     }
 }
